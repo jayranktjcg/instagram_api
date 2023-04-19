@@ -6,6 +6,6 @@
     <title>Login Page</title>
 </head>
 <body>
-    <a href="https://api.instagram.com/oauth/authorize?client_id={{ env('INSTAGRAM_APP_ID') }}&redirect_uri={{ route('auth.success') }}&scope=user_profile,&response_type=code">Login To Instagram</a>
+    <a href="https://api.instagram.com/oauth/authorize?client_id={{ env('INSTAGRAM_APP_ID') }}&redirect_uri={{ env('INSTAGRAM_REDIRECT_URI') }}&scope=user_profile,&response_type=code">Login To Instagram</a>
 </body>
 </html>
