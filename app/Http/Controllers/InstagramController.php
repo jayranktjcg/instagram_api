@@ -49,11 +49,21 @@ class InstagramController extends Controller
                 return ajaxResponse(false,[],$accessTokenResponse['message']);
             }
         }else{
-            $userData = User::find($authorizedUserId);
-            if(!empty($userData)){
-                $userNodeResponse = $this->APIService->getUserNode($userData->user_id, $userData->access_token);
-            }
-            dd($userData);
+
+            return redirect('/user_media');
         }
+    }
+
+    public function user_media()
+    {
+        $authorizedUserId = session()->get('user_id');
+        $userData = User::where('id', $authorizedUserId)->first();
+        if(!empty($userData)){
+            $userMedia = $this->APIService->getUserMediaEdge($userData->access_token);
+            dd($userMedia);
+        }else{
+            return redirect('/');
+        }
+        dd($userData);
     }
 }

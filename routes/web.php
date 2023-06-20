@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('success', [InstagramController::class, 'success'])->name('auth.success');
+Route::get('user_media', [InstagramController::class, 'user_media'])->name('auth.success');

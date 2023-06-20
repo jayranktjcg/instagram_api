@@ -33,13 +33,38 @@ class APIService{
         }
     }
 
-    // Use for exchange authorize code to access token
+    // Use for fetch userdata
     public function getUserNode($userId, $accessToken){
         try {
             $url = env('INSTAGRAM_GRAPH_URL').$userId;
             $response = $this->client->get($url, [
                 'query' => [
                     'fields'=>'id,username',
+                    'access_token'=>$accessToken
+                ],
+            ]);
+            $body = $response->getBody();
+            $data = json_decode($body, true);
+            dd($data);
+            if(!empty($data)){
+                return ajaxResponse(true, $data,'Access token generated.');
+            }else{
+                return ajaxResponse(false,[],"Sorry! Something went wrong.");
+            }
+        } catch (ClientException $e) {
+            return ajaxResponse(false,[],$e->getMessage());
+        } catch (Exception $e) {
+            return ajaxResponse(false,[],$e->getMessage());
+        }
+    }
+
+    // Use for fetch user media
+    public function getUserMediaEdge($accessToken){
+        try {
+            $url = env('INSTAGRAM_GRAPH_URL')."me/media/";
+            $response = $this->client->get($url, [
+                'query' => [
+                    'fields'=>'id,caption',
                     'access_token'=>$accessToken
                 ],
             ]);
